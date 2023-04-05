@@ -2,6 +2,7 @@ package com.rakib.kafka_producer_consumer.controller;
 
 import com.rakib.kafka_producer_consumer.model.SimpleModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,4 +20,10 @@ public class kafkaSimpleController {
     public void post(@RequestBody SimpleModel simpleModel) {
         kafkaTemplate.send("myTopic", simpleModel);
     }
+
+    @KafkaListener(topics = "myTopic")
+    public void getFromKafka(SimpleModel simpleModel){
+        System.out.println(simpleModel);
+    }
+
 }
